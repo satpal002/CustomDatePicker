@@ -1,4 +1,4 @@
-package com.satpal.customdatepickerapp;
+package com.satpal.customdatepicker;
 /* Fork of Oreo DatePickerSpinnerDelegate
  *
  * Original class is Copyright (C) 2016 The Android Open Source Project
@@ -35,8 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
-
-import com.satpal.customdatepicker.R;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;

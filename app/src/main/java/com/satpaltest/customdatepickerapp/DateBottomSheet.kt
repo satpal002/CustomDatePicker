@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.satpal.customdatepickerapp.CustomDatePicker
-import com.satpal.customdatepickerapp.OnDateChangedListener
+import com.satpal.customdatepicker.CustomDatePicker
+import com.satpal.customdatepicker.OnDateChangedListener
 import java.text.SimpleDateFormat
 import java.util.*
 

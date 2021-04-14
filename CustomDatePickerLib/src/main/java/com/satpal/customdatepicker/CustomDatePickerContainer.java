@@ -1,12 +1,10 @@
-package com.satpal.customdatepickerapp;
+package com.satpal.customdatepicker;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-
-import com.satpal.customdatepicker.R;
 
 public class CustomDatePickerContainer extends LinearLayout {
     public CustomDatePickerContainer(Context context) {

@@ -1,4 +1,4 @@
-package com.satpal.customdatepickerapp;
+package com.satpal.customdatepicker;
 
 import android.widget.NumberPicker;
 

@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="@+id/imvTopArrow"
         app:layout_constraintTop_toBottomOf="@+id/imvTopArrow" />
 
-    <com.satpal.customdatepickerapp.CustomDatePickerContainer
+    <com.satpal.customdatepicker.CustomDatePickerContainer
         android:id="@+id/datePickerParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
