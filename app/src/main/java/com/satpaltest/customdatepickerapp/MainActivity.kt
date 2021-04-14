@@ -1,10 +1,11 @@
-package com.satpal.customdatepickerapp
+package com.satpaltest.customdatepickerapp
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.satpal.customdatepickerapp.CustomDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
 
