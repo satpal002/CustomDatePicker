@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">CustomDatePicker</string>
+
+    <array name="months_array_hi">
+
+        <item>जन</item>
+
+        <item>फर</item>
+
+        <item>मार्च</item>
+
+        <item>अप्रै</item>
+
+        <item>मई</item>
+
+        <item>जून</item>
+
+        <item>जुलाई</item>
+
+        <item>अग</item>
+
+        <item>सितं</item>
+
+        <item>अक्टू</item>
+
+        <item>नहीं</item>
+
+        <item>दिसं</item>
+
+    </array>
+
+    <array name="months_array_es">
+
+        <item>Ene</item>
+
+        <item>Feb</item>
+
+        <item>Mar</item>
+
+        <item>Abr</item>
+
+        <item>May</item>
+
+        <item>Jun</item>
+
+        <item>Jul</item>
+
+        <item>Ago</item>
+
+        <item>Sep</item>
+
+        <item>Oct</item>
+
+        <item>Nov</item>
+
+        <item>Dic</item>
+
+    </array>
+
+
+</resources>

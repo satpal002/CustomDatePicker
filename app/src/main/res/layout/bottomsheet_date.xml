@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false">
+
+    <ImageView
+        android:id="@+id/imvTopArrow"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_selector" />
+
+    <TextView
+        android:id="@+id/txtvTitleBelow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Select Date"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imvTopArrow"
+        app:layout_constraintStart_toStartOf="@+id/imvTopArrow"
+        app:layout_constraintTop_toBottomOf="@+id/imvTopArrow" />
+
+    <com.satpal.customdatepickerapp.CustomDatePickerContainer
+        android:id="@+id/datePickerParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:minHeight="100dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtvTitleBelow" />
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/datePickerParent"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:minHeight="100dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/txtvTitleBelow">-->
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/parent"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center_horizontal"-->
+    <!--            android:orientation="horizontal">-->
+
+    <!--        </LinearLayout>-->
+    <!--    </LinearLayout>-->
+
+
+    <TextView
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Save"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePickerParent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_percent="0.53" />
+</androidx.constraintlayout.widget.ConstraintLayout>
