@@ -437,7 +437,9 @@ public class CustomDatePicker extends FrameLayout {
     private void updateSpinners() {
         // set the spinner ranges respecting the min and max dates
         mDaySpinner.setVisibility(mIsDayShown ? View.VISIBLE : View.GONE);
-        if (mCurrentDate.equals(mMinDate)) {
+//        if (mCurrentDate.equals(mMinDate)) {
+        if (isDateEqual(mCurrentDate, mMinDate)) {
+            mDaySpinner.setWrapSelectorWheel(false);
             mDaySpinner.setMinValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
             mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
             mDaySpinner.setWrapSelectorWheel(false);
@@ -445,7 +447,8 @@ public class CustomDatePicker extends FrameLayout {
             mMonthSpinner.setMinValue(mCurrentDate.get(Calendar.MONTH));
             mMonthSpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.MONTH));
             mMonthSpinner.setWrapSelectorWheel(false);
-        } else if (mCurrentDate.equals(mMaxDate)) {
+        } else if (isDateEqual(mCurrentDate, mMaxDate)) {
+            mDaySpinner.setWrapSelectorWheel(false);
             mDaySpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.DAY_OF_MONTH));
             mDaySpinner.setMaxValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
             mDaySpinner.setWrapSelectorWheel(false);
@@ -454,13 +457,35 @@ public class CustomDatePicker extends FrameLayout {
             mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
             mMonthSpinner.setWrapSelectorWheel(false);
         } else {
-            mDaySpinner.setMinValue(1);
-            mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
-            mDaySpinner.setWrapSelectorWheel(true);
-            mMonthSpinner.setDisplayedValues(null);
-            mMonthSpinner.setMinValue(0);
-            mMonthSpinner.setMaxValue(11);
-            mMonthSpinner.setWrapSelectorWheel(true);
+            if(isMonthAndYearEqual(mCurrentDate, mMinDate))
+            {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(true);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(mCurrentDate.get(Calendar.MONTH));
+                mMonthSpinner.setMaxValue(11);
+                mMonthSpinner.setWrapSelectorWheel(false);
+            }
+            else if(isMonthAndYearEqual(mCurrentDate, mMaxDate))
+            {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(true);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.MONTH));
+                mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
+                mMonthSpinner.setWrapSelectorWheel(true);
+            }
+            else {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(true);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(0);
+                mMonthSpinner.setMaxValue(11);
+                mMonthSpinner.setWrapSelectorWheel(true);
+            }
         }
 
         // make sure the month names are a zero based array
@@ -485,6 +510,23 @@ public class CustomDatePicker extends FrameLayout {
         }
     }
 
+
+    private boolean isDateEqual(Calendar firstDate, Calendar secondDate) {
+        if (firstDate.get(Calendar.DAY_OF_MONTH) == secondDate.get(Calendar.DAY_OF_MONTH) &&
+                firstDate.get(Calendar.MONTH) == secondDate.get(Calendar.MONTH) &&
+                firstDate.get(Calendar.YEAR) == secondDate.get(Calendar.YEAR)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isMonthAndYearEqual(Calendar firstDate, Calendar secondDate) {
+        if (firstDate.get(Calendar.MONTH) == secondDate.get(Calendar.MONTH) &&
+                firstDate.get(Calendar.YEAR) == secondDate.get(Calendar.YEAR)) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Notifies the listener, if such, for a change in the selected date.
