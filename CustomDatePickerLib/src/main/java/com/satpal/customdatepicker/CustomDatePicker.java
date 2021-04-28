@@ -87,6 +87,8 @@ public class CustomDatePicker extends FrameLayout {
 
     private boolean mIsDayShown = true;
 
+    private boolean scrollToNextMonthYearEnabled = true;
+
     private String[] monthNames;
 
     private int selectorDrawable = R.drawable.selector_drawable;
@@ -212,8 +214,9 @@ public class CustomDatePicker extends FrameLayout {
     }
 
     public void init(int year, int monthOfYear, int dayOfMonth,
-                     boolean isDayShown, OnDateChangedListener onDateChangedListener, String[] monthNames) {
+                     boolean isDayShown, OnDateChangedListener onDateChangedListener, String[] monthNames, boolean _scrollToNextMonthYearEnabled) {
         this.monthNames = monthNames;
+        this.scrollToNextMonthYearEnabled = _scrollToNextMonthYearEnabled;
         mShortMonths = monthNames;
         mIsDayShown = isDayShown;
         setDate(year, monthOfYear, dayOfMonth);
@@ -434,7 +437,7 @@ public class CustomDatePicker extends FrameLayout {
         }
     }
 
-    private void updateSpinners() {
+    private void updateSpinnersWithoutScrollToNext() {
         // set the spinner ranges respecting the min and max dates
         mDaySpinner.setVisibility(mIsDayShown ? View.VISIBLE : View.GONE);
 //        if (mCurrentDate.equals(mMinDate)) {
@@ -457,8 +460,83 @@ public class CustomDatePicker extends FrameLayout {
             mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
             mMonthSpinner.setWrapSelectorWheel(false);
         } else {
-            if(isMonthAndYearEqual(mCurrentDate, mMinDate))
-            {
+            if (isMonthAndYearEqual(mCurrentDate, mMinDate)) {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(false);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(mCurrentDate.get(Calendar.MONTH));
+                mMonthSpinner.setMaxValue(11);
+                mMonthSpinner.setWrapSelectorWheel(false);
+            } else if (isMonthAndYearEqual(mCurrentDate, mMaxDate)) {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mMaxDate.get(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(false);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.MONTH));
+                mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
+                mMonthSpinner.setWrapSelectorWheel(false);
+            } else {
+                mDaySpinner.setMinValue(1);
+                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setWrapSelectorWheel(false);
+                mMonthSpinner.setDisplayedValues(null);
+                mMonthSpinner.setMinValue(0);
+                mMonthSpinner.setMaxValue(11);
+                mMonthSpinner.setWrapSelectorWheel(false);
+            }
+        }
+
+        // make sure the month names are a zero based array
+        // with the months in the month spinner
+        String[] displayedValues = Arrays.copyOfRange(mShortMonths,
+                mMonthSpinner.getMinValue(),
+                mMonthSpinner.getMaxValue() + 1);
+        mMonthSpinner.setDisplayedValues(displayedValues);
+
+        // year spinner range does not change based on the current date
+        mYearSpinner.setMinValue(mMinDate.get(Calendar.YEAR));
+        mYearSpinner.setMaxValue(mMaxDate.get(Calendar.YEAR));
+        mYearSpinner.setWrapSelectorWheel(false);
+
+        // set the spinner values
+        mYearSpinner.setValue(mCurrentDate.get(Calendar.YEAR));
+        mMonthSpinner.setValue(mCurrentDate.get(Calendar.MONTH));
+        mDaySpinner.setValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
+
+        if (usingNumericMonths()) {
+            mMonthSpinnerInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+    }
+
+    private void updateSpinners() {
+        if (!scrollToNextMonthYearEnabled) {
+            updateSpinnersWithoutScrollToNext();
+            return;
+        }
+        // set the spinner ranges respecting the min and max dates
+        mDaySpinner.setVisibility(mIsDayShown ? View.VISIBLE : View.GONE);
+//        if (mCurrentDate.equals(mMinDate)) {
+        if (isDateEqual(mCurrentDate, mMinDate)) {
+            mDaySpinner.setWrapSelectorWheel(false);
+            mDaySpinner.setMinValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
+            mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+            mDaySpinner.setWrapSelectorWheel(false);
+            mMonthSpinner.setDisplayedValues(null);
+            mMonthSpinner.setMinValue(mCurrentDate.get(Calendar.MONTH));
+            mMonthSpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.MONTH));
+            mMonthSpinner.setWrapSelectorWheel(false);
+        } else if (isDateEqual(mCurrentDate, mMaxDate)) {
+            mDaySpinner.setWrapSelectorWheel(false);
+            mDaySpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.DAY_OF_MONTH));
+            mDaySpinner.setMaxValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
+            mDaySpinner.setWrapSelectorWheel(false);
+            mMonthSpinner.setDisplayedValues(null);
+            mMonthSpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.MONTH));
+            mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
+            mMonthSpinner.setWrapSelectorWheel(false);
+        } else {
+            if (isMonthAndYearEqual(mCurrentDate, mMinDate)) {
                 mDaySpinner.setMinValue(1);
                 mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
                 mDaySpinner.setWrapSelectorWheel(true);
@@ -466,18 +544,15 @@ public class CustomDatePicker extends FrameLayout {
                 mMonthSpinner.setMinValue(mCurrentDate.get(Calendar.MONTH));
                 mMonthSpinner.setMaxValue(11);
                 mMonthSpinner.setWrapSelectorWheel(false);
-            }
-            else if(isMonthAndYearEqual(mCurrentDate, mMaxDate))
-            {
+            } else if (isMonthAndYearEqual(mCurrentDate, mMaxDate)) {
                 mDaySpinner.setMinValue(1);
-                mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+                mDaySpinner.setMaxValue(mMaxDate.get(Calendar.DAY_OF_MONTH));
                 mDaySpinner.setWrapSelectorWheel(true);
                 mMonthSpinner.setDisplayedValues(null);
                 mMonthSpinner.setMinValue(mCurrentDate.getActualMinimum(Calendar.MONTH));
                 mMonthSpinner.setMaxValue(mCurrentDate.get(Calendar.MONTH));
                 mMonthSpinner.setWrapSelectorWheel(true);
-            }
-            else {
+            } else {
                 mDaySpinner.setMinValue(1);
                 mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
                 mDaySpinner.setWrapSelectorWheel(true);

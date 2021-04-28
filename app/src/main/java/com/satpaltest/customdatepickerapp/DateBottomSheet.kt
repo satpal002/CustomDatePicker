@@ -47,7 +47,7 @@ class DateBottomSheet(
         cal.set(2021, 5, 11)
         initDatePicker(
             view,
-            R.style.UnitNumberPickerWeight, 1582309800000, 1645468200000,
+            R.style.UnitNumberPickerWeight, System.currentTimeMillis(), 1777314600000,
             cal, true
         )
     }
@@ -67,7 +67,7 @@ class DateBottomSheet(
         mDatePicker!!.init(
             defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(
                 Calendar.DAY_OF_MONTH
-            ), isDayShown, this, resources.getStringArray(R.array.months_array_hi)
+            ), isDayShown, this, resources.getStringArray(R.array.months_array_hi), false
         )
     }
 
