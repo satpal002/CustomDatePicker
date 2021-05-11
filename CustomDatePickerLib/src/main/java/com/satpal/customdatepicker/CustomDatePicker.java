@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.ContextThemeWrapper;
@@ -36,6 +37,7 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -214,7 +216,8 @@ public class CustomDatePicker extends FrameLayout {
     }
 
     public void init(int year, int monthOfYear, int dayOfMonth,
-                     boolean isDayShown, OnDateChangedListener onDateChangedListener, String[] monthNames, boolean _scrollToNextMonthYearEnabled) {
+                     boolean isDayShown, OnDateChangedListener onDateChangedListener, String[] monthNames,
+                     boolean _scrollToNextMonthYearEnabled) {
         this.monthNames = monthNames;
         this.scrollToNextMonthYearEnabled = _scrollToNextMonthYearEnabled;
         mShortMonths = monthNames;
@@ -222,7 +225,9 @@ public class CustomDatePicker extends FrameLayout {
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
         mOnDateChangedListener = onDateChangedListener;
+
         notifyDateChanged();
+
     }
 
     public void init(int year, int monthOfYear, int dayOfMonth,
@@ -519,6 +524,33 @@ public class CustomDatePicker extends FrameLayout {
 
         if (usingNumericMonths()) {
             mMonthSpinnerInput.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+
+        try {
+            Field field = NumberPicker.class.getDeclaredField("mInputText");
+            field.setAccessible(true);
+            EditText inputText = (EditText) field.get(mDaySpinner);
+            inputText.setFilters(new InputFilter[0]);
+            inputText.setVisibility(View.INVISIBLE);
+        } catch (Exception e) {
+        }
+
+        try {
+            Field field = NumberPicker.class.getDeclaredField("mInputText");
+            field.setAccessible(true);
+            EditText inputText = (EditText) field.get(mMonthSpinner);
+            inputText.setFilters(new InputFilter[0]);
+            inputText.setVisibility(View.INVISIBLE);
+        } catch (Exception e) {
+        }
+
+        try {
+            Field field = NumberPicker.class.getDeclaredField("mInputText");
+            field.setAccessible(true);
+            EditText inputText = (EditText) field.get(mYearSpinner);
+            inputText.setFilters(new InputFilter[0]);
+            inputText.setVisibility(View.INVISIBLE);
+        } catch (Exception e) {
         }
     }
 

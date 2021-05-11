@@ -44,10 +44,10 @@ class DateBottomSheet(
 
 
         val cal = Calendar.getInstance()
-        cal.set(2021, 5, 11)
+        cal.set(2021, 5, 8)
         initDatePicker(
             view,
-            R.style.UnitNumberPickerWeight, System.currentTimeMillis(), 1777314600000,
+            R.style.UnitNumberPickerWeight, 1615174200000, 1620444600000,
             cal, true
         )
     }
