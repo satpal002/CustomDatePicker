@@ -245,6 +245,19 @@ public class CustomDatePicker extends FrameLayout {
         notifyDateChanged();
     }
 
+    public NumberPicker getDayNumberPicker()
+    {
+        return mDaySpinner;
+    }
+    public NumberPicker getMonthNumberPicker()
+    {
+        return mMonthSpinner;
+    }
+    public NumberPicker getYearNumberPicker()
+    {
+        return mYearSpinner;
+    }
+
     public int getYear() {
         return mCurrentDate.get(Calendar.YEAR);
     }
